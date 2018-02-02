@@ -1,0 +1,64 @@
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <script src="./js/vue.js"></script>
+</head>
+<body>
+<div id="app">
+    <button @click="show = !show">Show / Hide</button>
+    <p>The Counter : {{ counter }}</p>
+    <p>The Clicks : {{ clicks }}</p>
+    <button @click="increment">Increments</button>
+    <p v-if="show"><strong>I'm Visible</strong></p>
+    <p v-else><strong>I'm Else</strong></p>
+    <p v-show="show"><strong>Display = none</strong></p>
+    <ul v-for=" person in persons">
+        <li>{{person.name}} and the age is: {{person.age}}</li>
+    </ul>
+    <p>{{ title | uppercase }}</p>
+    <app-user></app-user>
+</div>
+
+
+
+<!--Vue Scripts-->
+<script>
+    Vue.component('app-user', {
+        data: function () {
+            return {
+                users: [
+                    {username: 'max', password: 1234},
+                    {username: 'gollia', password: 2465}
+                ]
+            };
+        },
+        template: '<table><tr><th>username</th><th>password</th></tr> <tr v-for="user in users"> <td>{{user.username}}</td> <td>{{user.password}}</td> </tr> </table>'
+    });
+    new Vue({
+        el: '#app',
+        data: {
+            title: "hello world",
+            counter: 0,
+            clicks: 0,
+            show: true,
+            persons: [
+                {name: 'ahmed', age: 20},
+                {name: 'mohamed', age: 26}
+            ]
+        },
+        methods: {
+            increment() {
+                this.clicks++;
+                this.counter = this.clicks * 2;
+            }
+        },
+        computed: {},
+        filters: {
+            uppercase: function (value) {
+                return value.toUpperCase();
+            }
+        },
+    });
+</script>
+</body>
+</html>
